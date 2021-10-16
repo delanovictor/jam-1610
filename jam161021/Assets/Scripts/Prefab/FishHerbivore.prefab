@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 342424463595340759}
   - component: {fileID: 342424463595340758}
-  - component: {fileID: 342424463595340753}
   - component: {fileID: 2173079937627850116}
   - component: {fileID: 3613268301239429064}
+  - component: {fileID: 1322401947180556909}
   m_Layer: 0
   m_Name: FishHerbivore
   m_TagString: Fish
@@ -84,37 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &342424463595340753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 342424463595340752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b04431f63e1c7944e92c9320a557d6ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fishType: 0
-  maxSpeed: {x: 1, y: 1}
-  currentSpeed: {x: 0, y: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
-  smoothVelocity: 0
-  smoothTime: 0.5
-  targetObject: {fileID: 0}
-  wanderRadius: 10
-  isWandering: 0
-  maxHunger: 100
-  currentHunger: 0
-  rateHunger: 2
-  hungerThreshold: 90
-  isWalkingToFood: 0
-  viewRadius: 5
-  visibleFoods: []
-  secondsToRandomPush: 0
-  lastPush: 0
-  cd: {fileID: 0}
 --- !u!61 &2173079937627850116
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -149,7 +118,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342424463595340752}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -162,3 +131,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1322401947180556909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342424463595340752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507f5f8033cfe2941980d474849f6d2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishType: 0
+  maxSpeed: {x: 2, y: 2}
+  currentSpeed: {x: 0, y: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  smoothVelocity: 0
+  smoothTime: 2
+  targetObject: {fileID: 0}
+  wanderRadius: 5
+  isWandering: 0
+  maxHunger: 100
+  currentHunger: 0
+  rateHunger: 2
+  hungerThreshold: 90
+  isWalkingToFood: 0
+  viewRadius: 5
+  visibleFoods: []
+  secondsToRandomPush: 0
+  lastPush: 0
+  cd: {fileID: 0}
