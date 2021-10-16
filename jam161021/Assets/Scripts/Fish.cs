@@ -14,9 +14,6 @@ public class Fish : MonoBehaviour
 
     public FishType fishType;
 
-<<<<<<< Updated upstream
-    public Vector2 speed;
-=======
     public Vector2 maxSpeed;
     public Vector2 currentSpeed;
     public Vector3 targetPosition;
@@ -26,43 +23,22 @@ public class Fish : MonoBehaviour
     
     public float wanderRadius;
     public bool isWandering;
->>>>>>> Stashed changes
+
 
     public float maxHunger;
     public float currentHunger;
     public float rateHunger;
-<<<<<<< Updated upstream
-=======
+
     public float hungerThreshold;
     public bool isWalkingToFood;
 
     public float viewRadius;
 	public List<Transform> visibleFoods = new List<Transform>();
 
->>>>>>> Stashed changes
-
     public float secondsToRandomPush;
     public float lastPush;
 
-<<<<<<< Updated upstream
-    void Start()
-    {
-        lastPush = Time.timeSinceLevelLoad;
-        currentHunger = maxHunger;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Time.timeSinceLevelLoad - lastPush > secondsToRandomPush){
-            Debug.Log("Random Push");
-            lastPush = Time.timeSinceLevelLoad;
-            secondsToRandomPush += Random.Range(5, 15);
-        };
-
-        currentHunger -= rateHunger * Time.deltaTime;
-    }
-=======
     public Collider2D cd;
 
     void Start()
@@ -188,7 +164,7 @@ public class Fish : MonoBehaviour
                     }
                 }
                 
-                if(other.gameObject.tag == 'Bullet'){
+                if(other.gameObject.tag == "Bullet"){
                     Die();
                 }
             break;
@@ -220,5 +196,4 @@ public class Fish : MonoBehaviour
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(transform.position, viewRadius);
     }
->>>>>>> Stashed changes
 }
