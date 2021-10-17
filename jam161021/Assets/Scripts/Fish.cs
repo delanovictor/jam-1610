@@ -28,6 +28,7 @@ public class Fish : MonoBehaviour
     public float maxHunger;
     public float currentHunger;
     public float rateHunger;
+    public float foodValue;
 
     public float hungerThreshold;
     public bool isWalkingToFood;
@@ -54,7 +55,7 @@ public class Fish : MonoBehaviour
 
         lastPush = Time.timeSinceLevelLoad;
 
-        StartCoroutine ("FindTargetsWithDelay", .1);
+        StartCoroutine ("FindTargetsWithDelay", .08);
         
     }
 
@@ -95,6 +96,14 @@ public class Fish : MonoBehaviour
 
         transform.Translate(velocity * Time.deltaTime);
 
+        if(transform.position.x > spawner.mapSizeX || transform.position.x  < 0){
+            Die();
+        }
+
+        if(transform.position.y > spawner.mapSizeY || transform.position.y  < 0){
+            Die();
+        }
+
     }
 
     IEnumerator FindTargetsWithDelay(float delay) {
@@ -121,11 +130,11 @@ public class Fish : MonoBehaviour
                 float randomX = Random.Range(- wanderRadius, wanderRadius);
                 float randomY = Random.Range(- wanderRadius, wanderRadius);
                 
-                if(transform.position.x + randomX > spawner.mapSizeX || transform.position.x  + randomX < 0){
+                if(transform.position.x + randomX > spawner.mapSizeX || transform.position.x +  randomX < 0){
                     randomX = -randomX;
                 }
 
-                if(transform.position.y + randomY > spawner.mapSizeY || transform.position.y  + randomY < 0){
+                if(transform.position.y + randomY > spawner.mapSizeY || transform.position.y +  randomY < 0){
                     randomY = -randomY;
                 }
 
@@ -136,10 +145,12 @@ public class Fish : MonoBehaviour
     }
 
 	void FindVisibleTargets() {
-		visibleFoods.Clear ();
-		Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), viewRadius);
-        
-		for (int i = 0; i < targetsInViewRadius.Length; i++) {
+        if(currentHunger < hungerThreshold){
+
+            visibleFoods.Clear ();
+            Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), viewRadius);
+            
+            for (int i = 0; i < targetsInViewRadius.Length; i++) {
 			Transform target = targetsInViewRadius [i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
             float dstToTarget = Vector3.Distance (transform.position, target.position);
@@ -148,22 +159,19 @@ public class Fish : MonoBehaviour
             if(dstToTarget > dstToNewTarget || isWandering){
                 if(fishType == FishType.Herbivore){
                     if(targetsInViewRadius[i].tag == "Plant"){
-                        if(currentHunger < hungerThreshold){
-                            isWandering = false;
-                            isWalkingToFood = true;
-                            targetObject = targetsInViewRadius[i].gameObject;
-                        }
+                        isWandering = false;
+                        isWalkingToFood = true;
+                        targetObject = targetsInViewRadius[i].gameObject;
                     }
                 }else{
                     if(fishType == FishType.Carnivore){
                         if(targetsInViewRadius[i].tag == "Fish"){
-                            if(currentHunger < hungerThreshold){
-                                Fish targetFish = targetsInViewRadius[i].gameObject.GetComponent<Fish>();
-                                if(targetFish.fishType == FishType.Herbivore){
-                                    isWandering = false;
-                                    isWalkingToFood = true;
-                                    targetObject = targetsInViewRadius[i].gameObject;
-                                }
+
+                            Fish targetFish = targetsInViewRadius[i].gameObject.GetComponent<Fish>();
+                            if(targetFish.fishType == FishType.Herbivore){
+                                isWandering = false;
+                                isWalkingToFood = true;
+                                targetObject = targetsInViewRadius[i].gameObject;
                             }
                         }
                     }
@@ -171,7 +179,10 @@ public class Fish : MonoBehaviour
             }
          
 		}
-	}
+	
+        }
+    
+    }
 
    private void OnCollisionEnter2D(Collision2D other)
    {
@@ -205,13 +216,13 @@ public class Fish : MonoBehaviour
     
     IEnumerator Eat(GameObject target, float time)
     {
+        currentHunger += foodValue;
 
         yield return new WaitForSeconds(time);
 
         targetObject = null;
         isWalkingToFood = false;
         Destroy(target);
-        currentHunger += 40f;
         StopCoroutine("Eat");
     }
 
@@ -220,7 +231,7 @@ public class Fish : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos() {
-        Gizmos.DrawWireSphere(transform.position, viewRadius);
-    }
+    // private void OnDrawGizmos() {
+    //     Gizmos.DrawWireSphere(transform.position, viewRadius);
+    // }
 }

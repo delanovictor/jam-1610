@@ -4,43 +4,65 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    public GameObject herbivore;
-    public GameObject carnivore;
-    public GameObject plant;
-
-
-    public int herbivoreStart;
-    public int carnivoreStart;
-    public int plantStart;
-
+    public Specie[] species;
+   
     public float mapSizeX;
     public float mapSizeY;
 
+    public float lastSpawn;
+
     void Start()
     {
-        for(int i = 0; i < herbivoreStart; i++){
-            float randomX = Random.Range(0, mapSizeX);
-            float randomY = Random.Range(0, mapSizeY);
 
-            Instantiate(herbivore, new Vector3(randomX, randomY, 1), Quaternion.identity);
+        foreach(Specie s in species){
+            s.holder = new GameObject(s.name);
+
+            for(int i = 0; i < s.startNumber; i++){
+                float randomX = Random.Range(0, mapSizeX);
+                float randomY = Random.Range(0, mapSizeY);
+
+                Instantiate(s.prefab, new Vector3(randomX, randomY, 1), Quaternion.identity, s.holder.transform);
+            }
+
+            s.lastSpawn =  Time.timeSinceLevelLoad;
         }
+      
+        Camera.main.transform.position = new Vector3(mapSizeX/2, mapSizeY/2, 0);
+    }
 
-         for(int i = 0; i < carnivoreStart; i++){
-            float randomX = Random.Range(0, mapSizeX);
-            float randomY = Random.Range(0, mapSizeY);
+    private void LateUpdate() {
+        foreach(Specie s in species){
+            s.currentNumber = s.holder.transform.childCount;
+            s.bar.setMax(s.maxNumber);
+            s.bar.setValue(s.currentNumber);
 
-            Instantiate(carnivore, new Vector3(randomX, randomY, 1), Quaternion.identity);
-        }
+            if(((Time.timeSinceLevelLoad - s.lastSpawn) ) > s.growthInterval + s.growthStartOffset){
+                s.growthStartOffset = 0;
+                s.generation ++;
+                int newOffspring = (int)(s.currentNumber * s.growthRate);
 
-         for(int i = 0; i < plantStart; i++){
-            float randomX = Random.Range(0, mapSizeX);
-            float randomY = Random.Range(0, mapSizeY);
 
-            Instantiate(plant, new Vector3(randomX, randomY, 1), Quaternion.identity);
+                if(newOffspring == 0 && s.currentNumber > 0){
+                    newOffspring = 1;
+                }
+
+
+                if(s.currentNumber + newOffspring < s.maxNumber){
+                    for(int i = 0; i < newOffspring; i++){
+                        float randomX = Random.Range(0, mapSizeX);
+                        float randomY = Random.Range(0, mapSizeY);
+
+                        Instantiate(s.prefab, new Vector3(randomX, randomY, 1), Quaternion.identity, s.holder.transform);
+                    }
+                }
+           
+                s.lastSpawn = Time.timeSinceLevelLoad;
+            }
         }
     }
 
-    
+     private void OnDrawGizmos() {
+        Gizmos.DrawWireCube(transform.position + new Vector3(mapSizeX/2, mapSizeY/2, 1),new Vector3(mapSizeX, mapSizeY, 1)
+        );
+    }
 }

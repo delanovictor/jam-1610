@@ -14,5 +14,4 @@ public class Plant : MonoBehaviour
         cd = GetComponent<Collider2D>();
     }
    
-    
 }
