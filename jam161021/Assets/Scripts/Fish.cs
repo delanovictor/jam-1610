@@ -15,6 +15,8 @@ public class Fish : MonoBehaviour
     public FishType fishType;
 
     public Vector2 maxSpeed;
+    public Vector2 originalMaxSpeed;
+
     public Vector2 currentSpeed;
     public Vector3 targetPosition;
     public float smoothVelocity;
@@ -43,6 +45,8 @@ public class Fish : MonoBehaviour
 
     public Collider2D cd;
 
+    public static float eventCarnivoreSpeed;
+
     void Start()
     {   
         spawner = FindObjectOfType<Spawner>();
@@ -53,6 +57,7 @@ public class Fish : MonoBehaviour
         maxSpeed.x += Random.Range(0, 2);
         maxSpeed.y += Random.Range(0, 2);
 
+        originalMaxSpeed = maxSpeed;
         lastPush = Time.timeSinceLevelLoad;
 
         StartCoroutine ("FindTargetsWithDelay", .08);
@@ -72,6 +77,9 @@ public class Fish : MonoBehaviour
         if(currentHunger <=0){
             Die();
         }
+
+     
+
     }
 
     private void FixedUpdate() {
@@ -88,6 +96,11 @@ public class Fish : MonoBehaviour
     
        
         direction = direction.normalized;
+
+        if(FishType.Carnivore  == fishType){
+            maxSpeed.x = originalMaxSpeed.x + eventCarnivoreSpeed;
+            maxSpeed.y = originalMaxSpeed.y + eventCarnivoreSpeed;
+        }
 
         currentSpeed.x = Mathf.SmoothDamp(currentSpeed.x, maxSpeed.x, ref smoothVelocity, smoothTime);
         currentSpeed.y = Mathf.SmoothDamp(currentSpeed.y, maxSpeed.y, ref smoothVelocity, smoothTime);

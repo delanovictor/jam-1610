@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
@@ -18,8 +19,22 @@ public class Spawner : MonoBehaviour
     public float nextEventTime;
 
     public GameObject currentEventObject;
-    private BarScript currentEventBar;
     public float currentEventTime;
+    public Text currentEventText;
+
+
+    private BarScript currentEventBar;
+    private float originalPlantInterval;
+    private float originalPlantGrowth;
+    private float originalHerbivoreGrowth;
+
+
+    public float eventPlantInterval;
+    public float eventCarnivoreSpeed;
+    public float eventHerbivoreGrowth;
+    public float eventPlantDeGrowth;
+    public float eventPlantDeath;
+
 
     void Start()
     {
@@ -37,6 +52,12 @@ public class Spawner : MonoBehaviour
             s.lastSpawn =  Time.timeSinceLevelLoad;
         }
       
+        originalPlantInterval = species[0].growthInterval;
+        originalPlantGrowth = species[0].growthRate;
+
+        originalHerbivoreGrowth = species[1].growthRate;
+
+
         Camera.main.transform.position = new Vector3(mapSizeX/2, mapSizeY/2, 0);
 
         nextEventBar.setMax(1);
@@ -96,18 +117,58 @@ public class Spawner : MonoBehaviour
 			yield return new WaitForSeconds (delay);
 
             Debug.Log("Starting Event");
-            StartCoroutine(EventExecuter(1, eventDuration));
+            StartCoroutine(EventExecuter(Random.Range(1,5), eventDuration));
 		}
 	}
 
     IEnumerator EventExecuter(int eventID, float delay) {
         currentEventTime = Time.timeSinceLevelLoad;
         currentEventObject.SetActive(true);
+
+        string eventName = "";
+
         switch(eventID){
+            case 1:
+                eventName = "Carnivore Frenzy";
+                Fish.eventCarnivoreSpeed = eventCarnivoreSpeed;
+            break;
+
+            case 2:
+                eventName = "Plant HyperGrowth";
+                species[0].growthInterval = eventPlantInterval;
+            break;
+
+            case 3:
+                eventName = "Herbivore Fertility";
+                species[1].growthRate = eventHerbivoreGrowth;
+            break;
             
+            case 4:
+                eventName = "Plant Death";
+                int numberOfPlants = Mathf.CeilToInt(species[0].holder.transform.childCount * eventPlantDeath);
+
+                for(int i = 0; i < numberOfPlants; i++){
+                    Destroy(species[0].holder.transform.GetChild(i).gameObject);
+                }
+
+                species[0].growthRate = eventPlantDeGrowth;
+
+            break;
         }
+        
+        currentEventText.text = eventName;
+
         Debug.Log("Executando evento " +eventID);
+
         yield return new WaitForSeconds (delay);
+
+        species[0].growthInterval = originalPlantInterval;
+
+        species[0].growthRate = originalPlantGrowth;
+        species[1].growthRate = originalHerbivoreGrowth;
+
+        Fish.eventCarnivoreSpeed = 0;
+
 
         currentEventObject.SetActive(false);
         Debug.Log("Fim do evento " +eventID);

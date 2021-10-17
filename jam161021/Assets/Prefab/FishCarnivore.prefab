@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishType: 1
   maxSpeed: {x: 2.5, y: 2.5}
+  originalMaxSpeed: {x: 0, y: 0}
   currentSpeed: {x: 0, y: 0}
   targetPosition: {x: 0, y: 0, z: 0}
   smoothVelocity: 0
@@ -154,7 +155,7 @@ MonoBehaviour:
   isWandering: 0
   maxHunger: 100
   currentHunger: 0
-  rateHunger: 9
+  rateHunger: 6
   foodValue: 60
   hungerThreshold: 90
   isWalkingToFood: 0
