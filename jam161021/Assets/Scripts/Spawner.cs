@@ -11,6 +11,16 @@ public class Spawner : MonoBehaviour
 
     public float lastSpawn;
 
+    public float timeBetweenEvents;
+    public float eventDuration;
+
+    public BarScript nextEventBar;
+    public float nextEventTime;
+
+    public GameObject currentEventObject;
+    private BarScript currentEventBar;
+    public float currentEventTime;
+
     void Start()
     {
 
@@ -28,8 +38,22 @@ public class Spawner : MonoBehaviour
         }
       
         Camera.main.transform.position = new Vector3(mapSizeX/2, mapSizeY/2, 0);
+
+        nextEventBar.setMax(1);
+        nextEventBar.setValue(0);
+
+        currentEventBar = currentEventObject.GetComponentInChildren<BarScript>();
+        currentEventObject.SetActive(false);
+
+        StartCoroutine ("RandomEventGenerator", timeBetweenEvents);
+
     }
 
+    private void Update() {
+        nextEventBar.setValue((Time.timeSinceLevelLoad - nextEventTime) / timeBetweenEvents);
+        currentEventBar.setValue((Time.timeSinceLevelLoad - currentEventTime) / eventDuration);
+    }
+    
     private void LateUpdate() {
         foreach(Specie s in species){
             s.currentNumber = s.holder.transform.childCount;
@@ -61,8 +85,32 @@ public class Spawner : MonoBehaviour
         }
     }
 
-     private void OnDrawGizmos() {
+    private void OnDrawGizmos() {
         Gizmos.DrawWireCube(transform.position + new Vector3(mapSizeX/2, mapSizeY/2, 1),new Vector3(mapSizeX, mapSizeY, 1)
         );
     }
+
+    IEnumerator RandomEventGenerator(float delay) {
+		while (true) {
+            nextEventTime = Time.timeSinceLevelLoad;
+			yield return new WaitForSeconds (delay);
+
+            Debug.Log("Starting Event");
+            StartCoroutine(EventExecuter(1, eventDuration));
+		}
+	}
+
+    IEnumerator EventExecuter(int eventID, float delay) {
+        currentEventTime = Time.timeSinceLevelLoad;
+        currentEventObject.SetActive(true);
+        switch(eventID){
+            
+        }
+        Debug.Log("Executando evento " +eventID);
+        yield return new WaitForSeconds (delay);
+
+        currentEventObject.SetActive(false);
+        Debug.Log("Fim do evento " +eventID);
+        StopCoroutine("EventExecuter");
+	}
 }
