@@ -38,11 +38,13 @@ public class Fish : MonoBehaviour
     public float secondsToRandomPush;
     public float lastPush;
 
+    public Spawner spawner;
 
     public Collider2D cd;
 
     void Start()
-    {
+    {   
+        spawner = FindObjectOfType<Spawner>();
         currentHunger = maxHunger;
 
         secondsToRandomPush = Random.Range(5, 15);
@@ -65,6 +67,10 @@ public class Fish : MonoBehaviour
 
   
         currentHunger -= rateHunger * Time.deltaTime;
+
+        if(currentHunger <=0){
+            Die();
+        }
     }
 
     private void FixedUpdate() {
@@ -106,10 +112,25 @@ public class Fish : MonoBehaviour
                 isWandering = false;
             }
         }else{
-            if(!isWalkingToFood){
+            if(isWalkingToFood){
+                if(targetObject == null){
+                    isWalkingToFood = false;
+                }
+            }else{
                 isWandering = true;
-                float randomAngle = Random.Range(0,360);
-                targetPosition = new Vector3(Mathf.Cos(randomAngle) * wanderRadius, Mathf.Sin(randomAngle) * wanderRadius, 1);
+                float randomX = Random.Range(- wanderRadius, wanderRadius);
+                float randomY = Random.Range(- wanderRadius, wanderRadius);
+                
+                if(transform.position.x + randomX > spawner.mapSizeX || transform.position.x  + randomX < 0){
+                    randomX = -randomX;
+                }
+
+                if(transform.position.y + randomY > spawner.mapSizeY || transform.position.y  + randomY < 0){
+                    randomY = -randomY;
+                }
+
+                targetPosition = new Vector3(transform.position.x + randomX, 
+                                             transform.position.y + randomY, 1);
             }
         }
     }
@@ -135,11 +156,15 @@ public class Fish : MonoBehaviour
                     }
                 }else{
                     if(fishType == FishType.Carnivore){
-                        Fish targetFish = targetsInViewRadius[i].gameObject.GetComponent<Fish>();
-                        if(targetFish.fishType == FishType.Herbivore){
-                            isWandering = false;
-                            isWalkingToFood = true;
-                            targetObject = targetsInViewRadius[i].gameObject;
+                        if(targetsInViewRadius[i].tag == "Fish"){
+                            if(currentHunger < hungerThreshold){
+                                Fish targetFish = targetsInViewRadius[i].gameObject.GetComponent<Fish>();
+                                if(targetFish.fishType == FishType.Herbivore){
+                                    isWandering = false;
+                                    isWalkingToFood = true;
+                                    targetObject = targetsInViewRadius[i].gameObject;
+                                }
+                            }
                         }
                     }
                 }
@@ -147,39 +172,41 @@ public class Fish : MonoBehaviour
          
 		}
 	}
-    
+
+   private void OnCollisionEnter2D(Collision2D other)
+   {
+        if(fishType == FishType.Carnivore){
+            if(other.gameObject.tag == "Fish"){
+                if(other.gameObject == targetObject){
+                    StartCoroutine(Eat(other.gameObject, 1.5f));
+                }
+            }
+         }
+              
+        if(other.gameObject.tag == "Bullet"){
+            Die();
+        }
+   }
+
    private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Collision");
-        switch(fishType){
-            case FishType.Herbivore:
-                Debug.Log("1");
 
-                if(other.gameObject.tag == "Plant"){
-                    Debug.Log("2");
-
-                    if(other.gameObject == targetObject){
-                        Debug.Log("3");
-
-                        StartCoroutine(Eat(other.gameObject, 1.5f));
-                    }
+        if(fishType == FishType.Herbivore){
+            if(other.gameObject.tag == "Plant"){
+                if(other.gameObject == targetObject){
+                    StartCoroutine(Eat(other.gameObject, 1.5f));
                 }
-                
-                if(other.gameObject.tag == "Bullet"){
-                    Die();
-                }
-            break;
-            case FishType.Carnivore:
+            }
+        }
 
-            break;
+        if(other.gameObject.tag == "Bullet"){
+            Die();
         }
     }
     
     IEnumerator Eat(GameObject target, float time)
     {
-        Debug.Log("4");
 
         yield return new WaitForSeconds(time);
-        Debug.Log("5");
 
         targetObject = null;
         isWalkingToFood = false;
