@@ -164,7 +164,6 @@ public class Spawner : MonoBehaviour
             nextEventTime = Time.timeSinceLevelLoad;
 			yield return new WaitForSeconds (delay);
 
-            Debug.Log("Starting Event");
             StartCoroutine(EventExecuter(Random.Range(1,5), eventDuration));
 		}
 	}
@@ -179,22 +178,22 @@ public class Spawner : MonoBehaviour
 
         switch(eventID){
             case 1:
-                eventName = "Carnivore Frenzy";
+                eventName = "Carnivore's Frenzy";
                 Fish.eventCarnivoreSpeed = eventCarnivoreSpeed;
             break;
 
             case 2:
-                eventName = "Plant HyperGrowth";
+                eventName = "Plant's HyperGrowth";
                 species[0].growthInterval = eventPlantInterval;
             break;
 
             case 3:
-                eventName = "Herbivore Fertility";
+                eventName = "Herbivore's Fertility";
                 species[1].growthRate = eventHerbivoreGrowth;
             break;
             
             case 4:
-                eventName = "Plant Death";
+                eventName = "Plant's Death";
                 int numberOfPlants = Mathf.CeilToInt(species[0].holder.transform.childCount * eventPlantDeath);
 
                 for(int i = 0; i < numberOfPlants; i++){
@@ -208,7 +207,6 @@ public class Spawner : MonoBehaviour
         
         currentEventText.text = eventName;
 
-        Debug.Log("Executando evento " +eventID);
 
         yield return new WaitForSeconds (delay);
 
@@ -221,7 +219,6 @@ public class Spawner : MonoBehaviour
 
 
         currentEventObject.SetActive(false);
-        Debug.Log("Fim do evento " +eventID);
         StopCoroutine("EventExecuter");
 	}
 }

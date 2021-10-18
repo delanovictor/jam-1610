@@ -14,25 +14,33 @@ public class Weapon : MonoBehaviour
     public float FireRateRocket = 5.0f;
  
  //The actual time the player will be able to fire.
-    private  float NextFireGun;
-    private  float NextFireRocket;
+    private  float LastFireGun;
+    private  float LastFireRocket;
 
-     public Slider sliderGun;
-     public Slider sliderRocket;
+     public BarScript sliderGun;
+     public BarScript sliderRocket;
 
+    void Start(){
+    
+        sliderGun.setMax(1);
+        sliderGun.setValue(0);
+        
+        sliderRocket.setMax(1);
+        sliderRocket.setValue(0);
+    }
     void Update()
     {   
-        if(Input.GetButtonDown("Fire1")  && Time.time > NextFireGun)   {
-            NextFireGun = Time.time + FireRateGun;
-            Debug.Log(NextFireGun);
-            sliderGun.value = NextFireGun;
+        if(Input.GetButtonDown("Fire1")  && (Time.time - LastFireGun > FireRateGun))   {
+            LastFireGun = Time.time;
             Shoot();
         }  
-        if(Input.GetButtonDown("Fire2")  && Time.time > NextFireRocket)   {
-            NextFireRocket = Time.time + FireRateRocket;
-            sliderRocket.value = NextFireRocket;   
+        if(Input.GetButtonDown("Fire2")  && (Time.time - LastFireRocket > FireRateRocket))   {
+            LastFireRocket = Time.time;
             Shoot2();
         }  
+
+        sliderRocket.setValue((Time.time - LastFireRocket) / FireRateRocket); 
+        sliderGun.setValue((Time.time - LastFireGun) / FireRateGun);  
     }
     
     void Shoot(){

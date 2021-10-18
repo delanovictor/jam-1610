@@ -195,16 +195,28 @@ public class Fish : MonoBehaviour
                     }
                 }
             }
+         
 		}
+	
         }
+    
     }
 
    private void OnCollisionEnter2D(Collision2D other)
    {
+       
+        if(fishType == FishType.Herbivore){
+            if(other.gameObject.tag == "Plant"){
+                if(other.gameObject == targetObject){
+                    StartCoroutine(Eat(other.gameObject, 1.0f));
+                }
+            }
+        }
+
         if(fishType == FishType.Carnivore){
             if(other.gameObject.tag == "Fish"){
                 if(other.gameObject == targetObject){
-                    StartCoroutine(Eat(other.gameObject, 1.5f));
+                    StartCoroutine(Eat(other.gameObject, 1.0f));
                 }
             }
          }
@@ -215,16 +227,10 @@ public class Fish : MonoBehaviour
    }
 
    private void OnTriggerEnter2D(Collider2D other) {
-
-        if(fishType == FishType.Herbivore){
-            if(other.gameObject.tag == "Plant"){
-                if(other.gameObject == targetObject){
-                    StartCoroutine(Eat(other.gameObject, 1.5f));
-                }
-            }
+        if(other.gameObject.tag == "Bullet"){
+            Die();
         }
-
-        if(other.gameObject.tag == "Bullet" || other.gameObject.tag == "Bullet2"){
+        if(other.gameObject.tag == "Bullet2"){
             Die();
         }
     }
@@ -245,4 +251,8 @@ public class Fish : MonoBehaviour
         Destroy(gameObject);
     }
 
+
+    // private void OnDrawGizmos() {
+    //     Gizmos.DrawWireSphere(transform.position, viewRadius);
+    // }
 }
