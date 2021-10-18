@@ -25,4 +25,6 @@ public class Specie
 
     public int generation = 0;
 
+    public int minGenReprodution = 0;
+
 }

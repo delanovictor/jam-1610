@@ -34,20 +34,25 @@ public class Spawner : MonoBehaviour
     private float originalPlantInterval;
     private float originalPlantGrowth;
     private float originalHerbivoreGrowth;
+    private float originalHerbivoreInterval;
 
 
     public float eventPlantInterval;
+    public float eventPlantGrowth;
     public float eventCarnivoreSpeed;
     public float eventHerbivoreGrowth;
+    public float eventHerbivoreInterval;
     public float eventPlantDeGrowth;
     public float eventPlantDeath;
 
 
     public bool mainMenu;
 
+    public GameObject Player;
+
     void Awake()
     {
-
+        
         foreach(Specie s in species){
             s.holder = new GameObject(s.name);
 
@@ -67,6 +72,8 @@ public class Spawner : MonoBehaviour
         originalPlantGrowth = species[0].growthRate;
 
         originalHerbivoreGrowth = species[1].growthRate;
+        originalHerbivoreInterval = species[1].growthInterval;
+
 
 
         Camera.main.transform.position = new Vector3(mapSizeX/2, mapSizeY/2, 0);
@@ -103,7 +110,7 @@ public class Spawner : MonoBehaviour
                 GameOver("A Population Was Extinct");
             }else{
                 if(s.currentNumber >= s.maxNumber){
-                    GameOver("A Popiation Got Out of Control");
+                    GameOver("A Population Got Out of Control");
                 }
             }
 
@@ -116,6 +123,11 @@ public class Spawner : MonoBehaviour
 
                     if(newOffspring == 0 && s.currentNumber > 0){
                         newOffspring = 1;
+                    }
+
+                    if (newOffspring < s.minGenReprodution)
+                    {
+                        newOffspring = s.minGenReprodution;
                     }
 
                     for(int i = 0; i < newOffspring; i++){
@@ -141,13 +153,13 @@ public class Spawner : MonoBehaviour
 
     private void GameOver(string message){
         if(!gameOver){
-           // Destroy(player);
-          gameOver = true;
-          gameOverUI.SetActive(true);
-          gameOverCause.text = message;
-          float time = Time.timeSinceLevelLoad;
+            Destroy(Player);
+            gameOver = true;
+            gameOverUI.SetActive(true);
+            gameOverCause.text = message;
+            float time = Time.timeSinceLevelLoad;
 
-          gameOverTime.text = "You maintened the balance for " + time + " seconds";
+            gameOverTime.text = "You maintened the balance for " + time.ToString("C2") + " seconds";
         }
     }
     
@@ -164,7 +176,6 @@ public class Spawner : MonoBehaviour
             nextEventTime = Time.timeSinceLevelLoad;
 			yield return new WaitForSeconds (delay);
 
-            Debug.Log("Starting Event");
             StartCoroutine(EventExecuter(Random.Range(1,5), eventDuration));
 		}
 	}
@@ -179,22 +190,24 @@ public class Spawner : MonoBehaviour
 
         switch(eventID){
             case 1:
-                eventName = "Carnivore Frenzy";
+                eventName = "Carnivore's Frenzy";
                 Fish.eventCarnivoreSpeed = eventCarnivoreSpeed;
             break;
 
             case 2:
-                eventName = "Plant HyperGrowth";
+                eventName = "Plant's HyperGrowth";
                 species[0].growthInterval = eventPlantInterval;
+                species[0].growthRate = eventPlantGrowth;
             break;
 
             case 3:
-                eventName = "Herbivore Fertility";
+                eventName = "Herbivore's Fertility";
                 species[1].growthRate = eventHerbivoreGrowth;
+                species[1].growthInterval = eventHerbivoreInterval;
             break;
             
             case 4:
-                eventName = "Plant Death";
+                eventName = "Plant's Death";
                 int numberOfPlants = Mathf.CeilToInt(species[0].holder.transform.childCount * eventPlantDeath);
 
                 for(int i = 0; i < numberOfPlants; i++){
@@ -208,7 +221,6 @@ public class Spawner : MonoBehaviour
         
         currentEventText.text = eventName;
 
-        Debug.Log("Executando evento " +eventID);
 
         yield return new WaitForSeconds (delay);
 
@@ -216,12 +228,12 @@ public class Spawner : MonoBehaviour
 
         species[0].growthRate = originalPlantGrowth;
         species[1].growthRate = originalHerbivoreGrowth;
+        species[1].growthInterval = originalHerbivoreInterval;
 
         Fish.eventCarnivoreSpeed = 0;
 
 
         currentEventObject.SetActive(false);
-        Debug.Log("Fim do evento " +eventID);
         StopCoroutine("EventExecuter");
 	}
 }

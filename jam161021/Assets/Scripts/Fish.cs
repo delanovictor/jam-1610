@@ -208,7 +208,7 @@ public class Fish : MonoBehaviour
         if(fishType == FishType.Herbivore){
             if(other.gameObject.tag == "Plant"){
                 if(other.gameObject == targetObject){
-                    StartCoroutine(Eat(other.gameObject, 1.5f));
+                    StartCoroutine(Eat(other.gameObject, 1.0f));
                 }
             }
         }
@@ -216,7 +216,7 @@ public class Fish : MonoBehaviour
         if(fishType == FishType.Carnivore){
             if(other.gameObject.tag == "Fish"){
                 if(other.gameObject == targetObject){
-                    StartCoroutine(Eat(other.gameObject, 1.5f));
+                    StartCoroutine(Eat(other.gameObject, 1.0f));
                 }
             }
          }
@@ -228,6 +228,9 @@ public class Fish : MonoBehaviour
 
    private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Bullet"){
+            Die();
+        }
+        if(other.gameObject.tag == "Bullet2"){
             Die();
         }
     }

@@ -5,9 +5,7 @@ using UnityEngine;
 public class Plant : MonoBehaviour
 {
 
-    public Collider2D cd;
-
-    public float foodValue;
+    Collider2D cd;
 
     // Start is called before the first frame update
     private void Awake() {
@@ -18,8 +16,11 @@ public class Plant : MonoBehaviour
         if(other.gameObject.tag == "Bullet"){
             Die();
         }
+        if(other.gameObject.tag == "Bullet2"){
+            Die();
+        }
     }
-   
+
     void Die(){
         Destroy(gameObject);
     }
