@@ -105,6 +105,11 @@ public class Fish : MonoBehaviour
         currentSpeed.x = Mathf.SmoothDamp(currentSpeed.x, maxSpeed.x, ref smoothVelocity, smoothTime);
         currentSpeed.y = Mathf.SmoothDamp(currentSpeed.y, maxSpeed.y, ref smoothVelocity, smoothTime);
 
+        if(direction.x > 0){
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }else{
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
         Vector3 velocity = new Vector3(direction.x * currentSpeed.x, direction.y * currentSpeed.y, 0);
 
         transform.Translate(velocity * Time.deltaTime);
