@@ -121,90 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &192736031
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 192736033}
-  - component: {fileID: 192736032}
-  m_Layer: 0
-  m_Name: Spawner (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &192736032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 192736031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0ea68dc50398fd41bb3146f1338581a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  species:
-  - prefab: {fileID: 8430083730867007607, guid: 9775e02f54bc6854cac173b3803d01c1,
-      type: 3}
-    holder: {fileID: 0}
-    bar: {fileID: 0}
-    growthStartOffset: 0
-    growthInterval: 5
-    growthRate: 0.2
-    startNumber: 50
-    currentNumber: 0
-    maxNumber: 0
-    lastSpawn: 0
-    name: Planta
-    generation: 0
-  - prefab: {fileID: 342424463595340752, guid: f7d66d9b05d996049b48c653b894c635, type: 3}
-    holder: {fileID: 0}
-    bar: {fileID: 0}
-    growthStartOffset: 3
-    growthInterval: 5
-    growthRate: 0.25
-    startNumber: 20
-    currentNumber: 0
-    maxNumber: 0
-    lastSpawn: 0
-    name: Herbivoro
-    generation: 0
-  - prefab: {fileID: 19470335686000681, guid: 7e38fc0f561352a47acf2f7894c1ea2f, type: 3}
-    holder: {fileID: 0}
-    bar: {fileID: 0}
-    growthStartOffset: 6
-    growthInterval: 5
-    growthRate: 0.1
-    startNumber: 2
-    currentNumber: 0
-    maxNumber: 0
-    lastSpawn: 0
-    name: Carnivoro
-    generation: 0
-  mapSizeX: 100
-  mapSizeY: 50
-  lastSpawn: 0
---- !u!4 &192736033
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 192736031}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &490180361 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3361356568864001164, guid: a09c38587b420d640b91e0e4f95d3fe0,
@@ -343,7 +259,7 @@ MonoBehaviour:
     growthStartOffset: 0
     growthInterval: 5
     growthRate: 0.2
-    startNumber: 50
+    startNumber: 100
     currentNumber: 0
     maxNumber: 100
     lastSpawn: 0
@@ -355,7 +271,7 @@ MonoBehaviour:
     growthStartOffset: 3
     growthInterval: 5
     growthRate: 0.25
-    startNumber: 10
+    startNumber: 30
     currentNumber: 0
     maxNumber: 50
     lastSpawn: 0
@@ -367,15 +283,21 @@ MonoBehaviour:
     growthStartOffset: 6
     growthInterval: 5
     growthRate: 0.1
-    startNumber: 2
+    startNumber: 6
     currentNumber: 0
     maxNumber: 50
     lastSpawn: 0
     name: Carnivoro
     generation: 0
-  mapSizeX: 60
-  mapSizeY: 30
+  mapSizeX: 120
+  mapSizeY: 60
   lastSpawn: 0
+  timeBetweenEvents: 0
+  eventDuration: 0
+  nextEventBar: {fileID: 0}
+  nextEventTime: 0
+  currentEventObject: {fileID: 0}
+  currentEventTime: 0
 --- !u!4 &683126033
 Transform:
   m_ObjectHideFlags: 0
@@ -633,7 +555,7 @@ RectTransform:
   - {fileID: 1470448304}
   - {fileID: 490180361}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -704,7 +626,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1470448304 stripped
 RectTransform:

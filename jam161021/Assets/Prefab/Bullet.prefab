@@ -136,3 +136,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   rb: {fileID: 3663110967872843120}
+  rocketPrefab: {fileID: 1418468696620510012, guid: ce54dd1b87e44394c8177e6316523100,
+    type: 3}

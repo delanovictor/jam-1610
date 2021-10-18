@@ -177,11 +177,8 @@ public class Fish : MonoBehaviour
                     }
                 }
             }
-         
 		}
-	
         }
-    
     }
 
    private void OnCollisionEnter2D(Collision2D other)
@@ -209,7 +206,7 @@ public class Fish : MonoBehaviour
             }
         }
 
-        if(other.gameObject.tag == "Bullet"){
+        if(other.gameObject.tag == "Bullet" || other.gameObject.tag == "Bullet2"){
             Die();
         }
     }
@@ -230,8 +227,4 @@ public class Fish : MonoBehaviour
         Destroy(gameObject);
     }
 
-
-    // private void OnDrawGizmos() {
-    //     Gizmos.DrawWireSphere(transform.position, viewRadius);
-    // }
 }

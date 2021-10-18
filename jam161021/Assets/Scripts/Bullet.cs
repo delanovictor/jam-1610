@@ -7,11 +7,17 @@ public class Bullet : MonoBehaviour
     public float speed = 20f;
     public Rigidbody2D rb;
     // Start is called before the first frame update
+    public GameObject rocketPrefab;
+    
     void Start() {
         rb.velocity = transform.right * speed;
     }
     void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.tag == "Bullet" || other.gameObject.layer == 8){
+        if (this.gameObject.tag == "Bullet2") {
+            Destroy(gameObject);
+            Instantiate(rocketPrefab,this.gameObject.transform.position,this.gameObject.transform.rotation);
+        }
+        else if(other.gameObject.tag == "Fish" || other.gameObject.layer == 8){
             Destroy(gameObject);
         }
     }
