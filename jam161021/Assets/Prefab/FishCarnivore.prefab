@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 19470335686000681}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.2, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,8 +73,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.9433962, g: 0.20024922, b: 0.20024922, a: 1}
+  m_Sprite: {fileID: -8109905420325472776, guid: 5ae481ae528ddf94b9d1e5a8b7782d1d,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,18 +98,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.044654846, y: -0.06058836}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 26.590002, y: 14.740001}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 26.886276, y: 14.823113}
   m_EdgeRadius: 0
 --- !u!50 &3936512721934607409
 Rigidbody2D:
@@ -145,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishType: 1
   maxSpeed: {x: 2.5, y: 2.5}
+  originalMaxSpeed: {x: 0, y: 0}
   currentSpeed: {x: 0, y: 0}
   targetPosition: {x: 0, y: 0, z: 0}
   smoothVelocity: 0
@@ -154,11 +156,11 @@ MonoBehaviour:
   isWandering: 0
   maxHunger: 100
   currentHunger: 0
-  rateHunger: 9
+  rateHunger: 5
   foodValue: 60
   hungerThreshold: 90
   isWalkingToFood: 0
-  viewRadius: 12
+  viewRadius: 15
   visibleFoods: []
   secondsToRandomPush: 0
   lastPush: 0
