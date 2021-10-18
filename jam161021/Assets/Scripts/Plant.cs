@@ -5,9 +5,7 @@ using UnityEngine;
 public class Plant : MonoBehaviour
 {
 
-    public Collider2D cd;
-
-    public float foodValue;
+    Collider2D cd;
 
     // Start is called before the first frame update
     private void Awake() {
