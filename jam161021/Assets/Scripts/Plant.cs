@@ -13,5 +13,15 @@ public class Plant : MonoBehaviour
     private void Awake() {
         cd = GetComponent<Collider2D>();
     }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.tag == "Bullet"){
+            Die();
+        }
+    }
    
+    void Die(){
+        Destroy(gameObject);
+    }
+
 }
