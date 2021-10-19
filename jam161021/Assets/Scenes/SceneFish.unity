@@ -1861,6 +1861,16 @@ PrefabInstance:
       propertyPath: sliderRocket
       value: 
       objectReference: {fileID: 1825750401}
+    - target: {fileID: 1686195010499329256, guid: 9c0027f3247af1b4c8c8c0ac587b557a,
+        type: 3}
+      propertyPath: FireRateGun
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686195010499329256, guid: 9c0027f3247af1b4c8c8c0ac587b557a,
+        type: 3}
+      propertyPath: FireRateRocket
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1686195010901177534, guid: 9c0027f3247af1b4c8c8c0ac587b557a,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -2088,22 +2098,22 @@ MonoBehaviour:
     holder: {fileID: 0}
     bar: {fileID: 490180362}
     growthStartOffset: 0
-    growthInterval: 5
-    growthRate: 0.3
-    startNumber: 100
+    growthInterval: 6
+    growthRate: 0.1
+    startNumber: 60
     currentNumber: 0
     maxNumber: 200
     lastSpawn: 0
     name: Planta
     generation: 0
-    minGenReprodution: 2
+    minGenReprodution: 3
   - prefab: {fileID: 342424463595340752, guid: f7d66d9b05d996049b48c653b894c635, type: 3}
     holder: {fileID: 0}
     bar: {fileID: 1664101757}
     growthStartOffset: 3
-    growthInterval: 5
-    growthRate: 0.35
-    startNumber: 50
+    growthInterval: 4
+    growthRate: 0.25
+    startNumber: 20
     currentNumber: 0
     maxNumber: 100
     lastSpawn: 0
@@ -2116,7 +2126,7 @@ MonoBehaviour:
     growthStartOffset: 6
     growthInterval: 5
     growthRate: 0.1
-    startNumber: 50
+    startNumber: 30
     currentNumber: 0
     maxNumber: 80
     lastSpawn: 0
@@ -2126,8 +2136,8 @@ MonoBehaviour:
   mapSizeX: 77
   mapSizeY: 35
   lastSpawn: 0
-  timeBetweenEvents: 40
-  eventDuration: 15
+  timeBetweenEvents: 25
+  eventDuration: 8
   nextEventBar: {fileID: 166611538}
   nextEventTime: 0
   currentEventObject: {fileID: 1782435584}
@@ -2137,11 +2147,11 @@ MonoBehaviour:
   gameOverCause: {fileID: 223037387}
   gameOverTime: {fileID: 655998544}
   gameOver: 0
-  eventPlantInterval: 2.5
+  eventPlantInterval: 4
   eventPlantGrowth: 0.25
   eventCarnivoreSpeed: 5
   eventHerbivoreGrowth: 0.4
-  eventHerbivoreInterval: 3.5
+  eventHerbivoreInterval: 4
   eventPlantDeGrowth: 0.1
   eventPlantDeath: 0.5
   mainMenu: 0
@@ -2170,7 +2180,7 @@ PrefabInstance:
     - target: {fileID: 1500889440077216806, guid: cf9723180d11b8642ae921a556beeccc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.344313
+      value: 18.34389
       objectReference: {fileID: 0}
     - target: {fileID: 1500889440077216806, guid: cf9723180d11b8642ae921a556beeccc,
         type: 3}
@@ -3580,7 +3590,7 @@ PrefabInstance:
     - target: {fileID: 4482587903097206522, guid: d90668b98411922429178ce91483be91,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.344313
+      value: 18.34389
       objectReference: {fileID: 0}
     - target: {fileID: 4482587903097206522, guid: d90668b98411922429178ce91483be91,
         type: 3}

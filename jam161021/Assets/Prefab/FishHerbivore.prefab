@@ -151,15 +151,15 @@ MonoBehaviour:
   smoothVelocity: 0
   smoothTime: 2
   targetObject: {fileID: 0}
-  wanderRadius: 5
+  wanderRadius: 15
   isWandering: 0
   maxHunger: 100
   currentHunger: 0
-  rateHunger: 7
-  foodValue: 40
-  hungerThreshold: 80
+  rateHunger: 5
+  foodValue: 35
+  hungerThreshold: 85
   isWalkingToFood: 0
-  viewRadius: 5
+  viewRadius: 15
   visibleFoods: []
   secondsToRandomPush: 0
   lastPush: 0

@@ -159,7 +159,7 @@ public class Spawner : MonoBehaviour
             gameOverCause.text = message;
             float time = Time.timeSinceLevelLoad;
 
-            gameOverTime.text = "You maintened the balance for " + time.ToString("C2") + " seconds";
+            gameOverTime.text = "You maintened the balance for " + time.ToString("N2") + " seconds";
         }
     }
     
@@ -176,7 +176,7 @@ public class Spawner : MonoBehaviour
             nextEventTime = Time.timeSinceLevelLoad;
 			yield return new WaitForSeconds (delay);
 
-            StartCoroutine(EventExecuter(Random.Range(1,5), eventDuration));
+            StartCoroutine(EventExecuter(Random.Range(1,4), eventDuration));
 		}
 	}
 
